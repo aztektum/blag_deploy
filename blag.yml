@@ -8,7 +8,7 @@
          dest=/home/debian/blag
 
 # install OS version of virtualenv
-  - apt: name=virtualenv
+  - apt: name=python-virtualenv
          state=latest
     become: yes
     become_method: sudo
