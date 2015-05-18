@@ -1,6 +1,7 @@
 # files
 *.swp
 *.pyc
+hosts
 
 # dirs
 venv/
