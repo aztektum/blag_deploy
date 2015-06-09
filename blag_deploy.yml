@@ -1,0 +1,19 @@
+- hosts: beaglebone
+  remote_user: debian
+
+  tasks:
+
+    # clone blag from github
+    - git: repo=ssh://git@github.com/aztektum/blag.git accept_hostkey=yes
+           dest=/home/debian/apps/blag
+           key_file=/home/debian/.ssh/ansible_key
+           force=yes
+
+    # install python requirements with pip into venv
+    - pip: requirements=/home/debian/apps/blag/requirements.txt 
+           virtualenv=/home/debian/apps/blag/venv
+
+    # start blag app using a python script
+    - command: ./venv/bin/python run.py &
+      args:
+        chdir: /home/debian/apps/blag/
