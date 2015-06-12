@@ -13,7 +13,13 @@
     - pip: requirements=/home/debian/apps/blag/requirements.txt 
            virtualenv=/home/debian/apps/blag/venv
 
-    # start blag app using a python script
-    - command: ./venv/bin/python run.py &
-      args:
-        chdir: /home/debian/apps/blag/
+    # setup a runit job to make this work
+    - command: ln -s /home/debian/apps/blag/ /etc/sv/blag/blag
+      when: false
+      become: yes
+      become_method: sudo
+
+    - command: ln -s /etc/sv/blag/run /etc/service/blag/
+      when: false
+      become: yes
+      become_method: sudo
