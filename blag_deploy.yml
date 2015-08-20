@@ -1,4 +1,4 @@
-- hosts: beaglebone
+- hosts: blag
   remote_user: debian
 
   tasks:
@@ -14,12 +14,20 @@
            virtualenv=/home/debian/apps/blag/venv
 
     # setup a runit job to make this work
-    - command: ln -s /home/debian/apps/blag/ /etc/sv/blag/blag
-      when: false
+    - file: path=/etc/sv/blag state=directory
       become: yes
       become_method: sudo
 
-    - command: ln -s /etc/sv/blag/run /etc/service/blag/
-      when: false
+    - command: ln -s /home/debian/apps/blag/run /etc/sv/blag
+      #when: false
+      become: yes
+      become_method: sudo
+
+    - file: path=/etc/service/blag state=directory
+      become: yes
+      become_method: sudo
+
+    - command: ln -s /etc/sv/blag/run /etc/service/blag
+      #when: false
       become: yes
       become_method: sudo
