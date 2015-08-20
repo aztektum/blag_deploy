@@ -14,23 +14,23 @@
            virtualenv=/home/debian/apps/blag/venv
 
     # setup a runit job to make this work
-    - file: path=/etc/sv/blag state=directory
-      #when: false
+#    - file: path=/etc/sv/blag state=directory
+#      #when: false
+#      become: yes
+#      become_method: sudo
+    
+    - file: path=/service state=directory
       become: yes
       become_method: sudo
     
-    - file: src=/home/debian/apps/blag/run dest=/etc/sv/blag/run 
+    - file: src=/home/debian/apps/blag dest=/etc/sv/blag
             owner=debian 
             group=debian 
             state=link
       become: yes
       become_method: sudo 
 
-    - file: path=/etc/service/blag state=directory
-      become: yes
-      become_method: sudo
-
-    - file: src=/etc/sv/blag/run dest=/etc/service/blag/run
+    - file: src=/etc/sv/blag dest=/etc/service/blag
             owner=debian
             group=debian
             state=link
