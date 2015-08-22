@@ -36,3 +36,9 @@
             state=link
       become: yes
       become_method: sudo
+
+    - file: path=/home/debian/apps/blag/run 
+            state=touch 
+            mode="u=rx,g=r,o=r"
+
+    - command: runsv /etc/sv/blag
